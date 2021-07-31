@@ -1,18 +1,19 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = Constants.COMPILE_SDK
+    buildToolsVersion = Constants.BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId = "com.teamcatchme.catchmecompose"
-        minSdk = 26
-        targetSdk = 30
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Constants.APPLICATION_ID
+        minSdk = Constants.MIN_SDK
+        targetSdk = Constants.TARGET_SDK
+        versionCode = Constants.VERSION_CODE
+        versionName = Constants.VERSION_NAME
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -30,34 +31,31 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = Versions.JAVA_VERSION
+        targetCompatibility = Versions.JAVA_VERSION
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-        useIR = true
+        jvmTarget = Versions.JVM_TARGET
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.extra["compose_version"] as String
-        kotlinCompilerVersion = "1.4.32"
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
     }
 }
 
 dependencies {
+    implementation(Dependencies.ANDROIDX_CORE)
+    implementation(Dependencies.APPCOMPAT)
+    implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.LIFECYCLE)
+    Dependencies.COMPOSE.forEach { implementation(it) }
 
-    implementation("androidx.core:core-ktx:1.6.0")
-    implementation("androidx.appcompat:appcompat:1.3.0")
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.0-rc02")
-    testImplementation("junit:junit:4.+")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
+    implementation(Dependencies.HILT)
+    kapt(Dependencies.HILT_COMPILER)
+    implementation(Dependencies.COROUTINES)
+    testImplementation(Dependencies.JUNIT)
+    androidTestImplementation(Dependencies.ANDROID_JUNIT)
+    androidTestImplementation(Dependencies.ESPRESSO)
 }
