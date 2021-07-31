@@ -54,7 +54,14 @@ dependencies {
 
     implementation(Dependencies.HILT)
     kapt(Dependencies.HILT_COMPILER)
+    kapt(Dependencies.HILT_ANDROID_COMPILER)
     implementation(Dependencies.COROUTINES)
+
+    implementation(platform(Dependencies.OKHTTP_BOM))
+    Dependencies.OKHTTP.forEach { implementation(it) }
+    implementation(Dependencies.RETROFIT)
+    implementation(Dependencies.COIL)
+
     testImplementation(Dependencies.JUNIT)
     androidTestImplementation(Dependencies.ANDROID_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO)
